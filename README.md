@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BEUMER Projects Map - Clean Markers</title>
+  <title>BEUMER Projects Map</title>
 
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -18,28 +18,27 @@
     }
 
     #map {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100vh; /* Full screen height */
     }
 
-    /* Popup Styling - Fully Transparent */
-    .leaflet-popup,
-    .leaflet-popup-content-wrapper,
+    .leaflet-popup-content-wrapper {
+      background: transparent;
+      box-shadow: none;
+      border: none;
+    }
+
     .leaflet-popup-tip {
-      background: transparent !important;
-      box-shadow: none !important;
-      border: none !important;
+      background: transparent;
     }
 
     .leaflet-popup-content {
       color: #003b6f;
       font-size: 14px;
       font-weight: bold;
-      text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
-      margin: 0;
+      text-shadow: 0 0 2px rgba(255,255,255,0.8);
     }
 
-    /* Legend Styling */
     #legend {
       position: fixed;
       bottom: 15px;
@@ -65,91 +64,101 @@
     }
 
     .legend-icon {
-      width: 16px;
-      height: 24px;
-      background-size: contain;
-      background-repeat: no-repeat;
+      width: 12px;
+      height: 20px;
+      background-size: cover;
     }
 
     .green-marker {
-      background-image: url('https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=check|00cc00');
+      background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png');
     }
 
     .yellow-marker {
-      background-image: url('https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=warning|ffcc00');
+      background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png');
     }
 
     .red-marker {
-      background-image: url('https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=close|cc0000');
+      background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png');
     }
   </style>
 </head>
 <body>
-  <div id="map"></div>
 
-  <!-- Legend -->
-  <div id="legend">
-    <div class="legend-item">
-      <div class="legend-icon green-marker"></div>
-      Active
-    </div>
-    <div class="legend-item">
-      <div class="legend-icon yellow-marker"></div>
-      Change Orders
-    </div>
-    <div class="legend-item">
-      <div class="legend-icon red-marker"></div>
-      Inactive
-    </div>
+<div id="map"></div>
+
+<!-- Legend -->
+<div id="legend">
+  <div class="legend-item">
+    <div class="legend-icon green-marker"></div>
+    Active
   </div>
+  <div class="legend-item">
+    <div class="legend-icon yellow-marker"></div>
+    Change Orders
+  </div>
+  <div class="legend-item">
+    <div class="legend-icon red-marker"></div>
+    Inactive
+  </div>
+</div>
 
-  <script>
-    const map = L.map('map').setView([39.8283, -98.5795], 4);
+<script>
+  const map = L.map('map').setView([39.8283, -98.5795], 4);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
-    const greenIcon = new L.Icon({
-      iconUrl: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=check|00cc00',
-      iconSize: [30, 50],
-      iconAnchor: [15, 50],
-      popupAnchor: [0, -40]
-    });
+  // Marker icons
+  const greenIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
-    const yellowIcon = new L.Icon({
-      iconUrl: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=warning|ffcc00',
-      iconSize: [30, 50],
-      iconAnchor: [15, 50],
-      popupAnchor: [0, -40]
-    });
+  const yellowIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
-    const redIcon = new L.Icon({
-      iconUrl: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=close|cc0000',
-      iconSize: [30, 50],
-      iconAnchor: [15, 50],
-      popupAnchor: [0, -40]
-    });
+  const redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
-    const amazonSites = [
-      { name: "SCO2", lat: 39.7392, lon: -104.9903, address: "Denver, CO" },
-      { name: "SAX7", lat: 34.0606, lon: -117.3955, address: "Bloomington, CA", icon: redIcon },
-      { name: "GEG5", lat: 47.6733, lon: -117.2264, address: "Spokane, WA", icon: yellowIcon },
-      { name: "ORF5", lat: 36.8485, lon: -76.2913, address: "Suffolk, VA" },
-      { name: "CNO8", lat: 34.3917, lon: -118.5373, address: "Santa Clarita, CA" },
-      { name: "SAT9", lat: 29.4210, lon: -98.5280, address: "San Antonio, TX" },
-      { name: "MTN6", lat: 39.2700, lon: -76.5450, address: "Baltimore, MD" },
-      { name: "RIC4", lat: 37.5787, lon: -77.4892, address: "Richmond, VA" },
-      { name: "YXX1", lat: 49.2333, lon: -122.6833, address: "Pitt Meadows, BC, Canada" },
-      { name: "SFL9", lat: 27.9956, lon: -82.0239, address: "Lakeland, FL" }
-    ];
+  // Project markers
+  const amazonSites = [
+    { name: "SCO2", lat: 39.7392, lon: -104.9903, address: "Denver, CO" },
+    { name: "SAX7", lat: 34.0606, lon: -117.3955, address: "Bloomington, CA", icon: redIcon },
+    { name: "GEG5", lat: 47.6733, lon: -117.2264, address: "Spokane, WA", icon: yellowIcon },
+    { name: "ORF5", lat: 36.8485, lon: -76.2913, address: "Suffolk, VA" },
+    { name: "CNO8", lat: 34.3917, lon: -118.5373, address: "Santa Clarita, CA" },
+    { name: "SAT9", lat: 29.4210, lon: -98.5280, address: "San Antonio, TX" },
+    { name: "MTN6", lat: 39.2700, lon: -76.5450, address: "Baltimore, MD" },
+    { name: "RIC4", lat: 37.5787, lon: -77.4892, address: "Richmond, VA" },
+    { name: "YXX1", lat: 49.2333, lon: -122.6833, address: "Pitt Meadows, BC, Canada" },
+    { name: "SFL9", lat: 27.9956, lon: -82.0239, address: "Lakeland, FL" }
+  ];
 
-    amazonSites.forEach(site => {
-      const markerIcon = site.icon || greenIcon;
-      L.marker([site.lat, site.lon], { icon: markerIcon })
-        .addTo(map)
-        .bindPopup(`<strong>${site.name}</strong><br>${site.address}`);
-    });
-  </script>
+  amazonSites.forEach(site => {
+    const markerIcon = site.icon || greenIcon;
+    L.marker([site.lat, site.lon], { icon: markerIcon })
+      .addTo(map)
+      .bindPopup(`<strong>${site.name}</strong><br>${site.address}`);
+  });
+</script>
+
 </body>
 </html>
+
