@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -22,14 +21,16 @@
       height: 100vh;
     }
 
+    /* Popup styling */
     .leaflet-popup-content-wrapper {
-      background: transparent !important;
-      box-shadow: none !important;
+      background: white !important;
+      border-radius: 8px !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
       border: none !important;
     }
 
     .leaflet-popup-tip {
-      background: transparent !important;
+      background: white !important;
     }
 
     .leaflet-popup-content {
@@ -37,6 +38,7 @@
       font-size: 14px;
       font-weight: bold;
       text-shadow: 0 0 2px rgba(255,255,255,0.8);
+      margin: 8px 12px;
     }
 
     /* Legend styling */
@@ -138,17 +140,16 @@
     });
 
     const amazonSites = [
-  { name: "SCO2", lat: 39.7392, lon: -104.9903, address: "Denver, CO" },
-{ name: "SAX7", lat: 34.0606, lon: -117.3955, address: "Bloomington, CA", icon: redIcon },
-{ name: "GEG5", lat: 47.6733, lon: -117.2264, address: "Spokane, WA", icon: yellowIcon },
-{ name: "ORF5", lat: 36.8485, lon: -76.2913, address: "Suffolk, VA" },
-{ name: "CNO8", lat: 34.3917, lon: -118.5373, address: "Santa Clarita, CA" },
-{ name: "SAT9", lat: 29.4210, lon: -98.5280, address: "San Antonio, TX" },
-{ name: "MTN6", lat: 39.2700, lon: -76.5450, address: "Baltimore, MD" },
-{ name: "RIC4", lat: 37.5787, lon: -77.4892, address: "Richmond, VA" },
-{ name: "YXX1", lat: 49.2333, lon: -122.6833, address: "Pitt Meadows, BC, Canada" },
-{ name: "SFL9", lat: 27.9956, lon: -82.0239, address: "Lakeland, FL" }
-
+      { name: "SCO2", lat: 39.7392, lon: -104.9903, address: "Denver, CO" },
+      { name: "SAX7", lat: 34.0606, lon: -117.3955, address: "Bloomington, CA", icon: redIcon },
+      { name: "GEG5", lat: 47.6733, lon: -117.2264, address: "Spokane, WA", icon: yellowIcon },
+      { name: "ORF5", lat: 36.8485, lon: -76.2913, address: "Suffolk, VA" },
+      { name: "CNO8", lat: 34.3917, lon: -118.5373, address: "Santa Clarita, CA" },
+      { name: "SAT9", lat: 29.4210, lon: -98.5280, address: "San Antonio, TX" },
+      { name: "MTN6", lat: 39.2700, lon: -76.5450, address: "Baltimore, MD" },
+      { name: "RIC4", lat: 37.5787, lon: -77.4892, address: "Richmond, VA" },
+      { name: "YXX1", lat: 49.2333, lon: -122.6833, address: "Pitt Meadows, BC, Canada" },
+      { name: "SFL9", lat: 27.9956, lon: -82.0239, address: "Lakeland, FL" }
     ];
 
     amazonSites.forEach(site => {
@@ -159,6 +160,8 @@
     });
   </script>
 </body>
+</html>
+
 </html>
 
 </body>
