@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BEUMER Projects Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BEUMER Projects Map - Clean Markers</title>
 
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -20,50 +20,26 @@
     #map {
       width: 100vw;
       height: 100vh;
-      z-index: 0;
     }
 
-    /* Custom circle marker icons */
-    .custom-ping {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid white;
-      box-shadow: 0 0 6px rgba(0,0,0,0.3);
-    }
-
-    .ping-green {
-      background-color: #3CB371; /* mediumseagreen */
-    }
-
-    .ping-yellow {
-      background-color: #FFD700; /* gold */
-    }
-
-    .ping-red {
-      background-color: #DC143C; /* crimson */
-    }
-
-    /* Popup styling */
-    .leaflet-popup-content-wrapper {
-      background: white !important;
-      border-radius: 8px !important;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
-      border: none !important;
-    }
-
+    /* Popup Styling - Fully Transparent */
+    .leaflet-popup,
+    .leaflet-popup-content-wrapper,
     .leaflet-popup-tip {
-      background: white !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
     }
 
     .leaflet-popup-content {
       color: #003b6f;
       font-size: 14px;
       font-weight: bold;
-      margin: 8px 12px;
+      text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+      margin: 0;
     }
 
-    /* Legend */
+    /* Legend Styling */
     #legend {
       position: fixed;
       bottom: 15px;
@@ -80,31 +56,35 @@
       gap: 20px;
       align-items: center;
       z-index: 1000;
-      pointer-events: none;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
       gap: 6px;
-      pointer-events: auto;
     }
 
     .legend-icon {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: 2px solid white;
-      box-shadow: 0 0 3px rgba(0,0,0,0.3);
+      width: 16px;
+      height: 24px;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
 
-    .green-marker { background-color: #3CB371; }
-    .yellow-marker { background-color: #FFD700; }
-    .red-marker { background-color: #DC143C; }
+    .green-marker {
+      background-image: url('https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=check|00cc00');
+    }
+
+    .yellow-marker {
+      background-image: url('https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=warning|ffcc00');
+    }
+
+    .red-marker {
+      background-image: url('https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=close|cc0000');
+    }
   </style>
 </head>
 <body>
-
   <div id="map"></div>
 
   <!-- Legend -->
@@ -130,19 +110,26 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Create CSS-based markers
-    function createPingMarker(colorClass) {
-      return L.divIcon({
-        className: `custom-ping ${colorClass}`,
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
-        popupAnchor: [0, -10]
-      });
-    }
+    const greenIcon = new L.Icon({
+      iconUrl: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=check|00cc00',
+      iconSize: [30, 50],
+      iconAnchor: [15, 50],
+      popupAnchor: [0, -40]
+    });
 
-    const greenIcon = createPingMarker("ping-green");
-    const yellowIcon = createPingMarker("ping-yellow");
-    const redIcon = createPingMarker("ping-red");
+    const yellowIcon = new L.Icon({
+      iconUrl: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=warning|ffcc00',
+      iconSize: [30, 50],
+      iconAnchor: [15, 50],
+      popupAnchor: [0, -40]
+    });
+
+    const redIcon = new L.Icon({
+      iconUrl: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=close|cc0000',
+      iconSize: [30, 50],
+      iconAnchor: [15, 50],
+      popupAnchor: [0, -40]
+    });
 
     const amazonSites = [
       { name: "SCO2", lat: 39.7392, lon: -104.9903, address: "Denver, CO" },
@@ -164,11 +151,5 @@
         .bindPopup(`<strong>${site.name}</strong><br>${site.address}`);
     });
   </script>
-</body>
-</html>
-
-
-</html>
-
 </body>
 </html>
