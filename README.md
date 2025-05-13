@@ -1,10 +1,11 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BEUMER Projects Map</title>
 
-  <!-- Leaflet CSS -->
+  <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -19,6 +20,28 @@
     #map {
       width: 100vw;
       height: 100vh;
+      z-index: 0;
+    }
+
+    /* Custom circle marker icons */
+    .custom-ping {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    .ping-green {
+      background-color: #3CB371; /* mediumseagreen */
+    }
+
+    .ping-yellow {
+      background-color: #FFD700; /* gold */
+    }
+
+    .ping-red {
+      background-color: #DC143C; /* crimson */
     }
 
     /* Popup styling */
@@ -37,11 +60,10 @@
       color: #003b6f;
       font-size: 14px;
       font-weight: bold;
-      text-shadow: 0 0 2px rgba(255,255,255,0.8);
       margin: 8px 12px;
     }
 
-    /* Legend styling */
+    /* Legend */
     #legend {
       position: fixed;
       bottom: 15px;
@@ -58,31 +80,27 @@
       gap: 20px;
       align-items: center;
       z-index: 1000;
+      pointer-events: none;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
       gap: 6px;
+      pointer-events: auto;
     }
 
     .legend-icon {
-      width: 12px;
-      height: 20px;
-      background-size: cover;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 3px rgba(0,0,0,0.3);
     }
 
-    .green-marker {
-      background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png');
-    }
-
-    .yellow-marker {
-      background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png');
-    }
-
-    .red-marker {
-      background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png');
-    }
+    .green-marker { background-color: #3CB371; }
+    .yellow-marker { background-color: #FFD700; }
+    .red-marker { background-color: #DC143C; }
   </style>
 </head>
 <body>
@@ -112,32 +130,19 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const greenIcon = new L.Icon({
-      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
+    // Create CSS-based markers
+    function createPingMarker(colorClass) {
+      return L.divIcon({
+        className: `custom-ping ${colorClass}`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, -10]
+      });
+    }
 
-    const redIcon = new L.Icon({
-      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-
-    const yellowIcon = new L.Icon({
-      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
-      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
+    const greenIcon = createPingMarker("ping-green");
+    const yellowIcon = createPingMarker("ping-yellow");
+    const redIcon = createPingMarker("ping-red");
 
     const amazonSites = [
       { name: "SCO2", lat: 39.7392, lon: -104.9903, address: "Denver, CO" },
@@ -161,6 +166,7 @@
   </script>
 </body>
 </html>
+
 
 </html>
 
